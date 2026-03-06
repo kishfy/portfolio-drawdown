@@ -385,11 +385,11 @@ function EditableAmount({ value, onChange, prefix = "$", suffix = "", min = 0, m
 }
 
 /* ---------- Reusable Slider Control ---------- */
-function SliderControl({ label, display, color = "#c8d4e8", sub, subColor = "#3a4a68", rangeLabel, min, max, step = 1, value, onChange, style }) {
+function SliderControl({ label, display, color = "#c8d4e8", sub, subColor = "#5a6a88", rangeLabel, min, max, step = 1, value, onChange, style }) {
   return (
     <div style={style}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-        <span style={{ fontSize: 16, color: "#7a8aa8", fontWeight: 500 }}>{label}</span>
+        <span style={{ fontSize: 16, color: "#96a5be", fontWeight: 500 }}>{label}</span>
         <span style={{ fontSize: 18, color, fontWeight: 600, fontFamily: MONO, transition: "color 0.2s" }}>
           {display}
         </span>
@@ -405,7 +405,7 @@ function SliderControl({ label, display, color = "#c8d4e8", sub, subColor = "#3a
       />
       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 14, fontFamily: MONO }}>
         <span style={{ color: subColor, transition: "color 0.2s" }}>{sub}</span>
-        {rangeLabel && <span style={{ color: "#3a4a68" }}>{rangeLabel}</span>}
+        {rangeLabel && <span style={{ color: "#96a5be" }}>{rangeLabel}</span>}
       </div>
     </div>
   );
@@ -556,7 +556,7 @@ export default function MonteCarloSim() {
 
   const sectionLabel = {
     fontSize: 13,
-    color: "#5a6a88",
+    color: "#96a5be",
     letterSpacing: 1.5,
     textTransform: "uppercase",
     fontFamily: MONO,
@@ -629,7 +629,7 @@ export default function MonteCarloSim() {
           <h1 style={{ fontSize: 42, fontWeight: 700, color: "#edf2fc", lineHeight: 1.15, marginBottom: 10 }}>
             Monte Carlo Portfolio Analysis
           </h1>
-          <p style={{ fontSize: 17, color: "#5a6a88", lineHeight: 1.5 }}>
+          <p style={{ fontSize: 17, color: "#96a5be", lineHeight: 1.5 }}>
             <EditableAmount
               value={portfolio / 1e6}
               onChange={(v) => setPortfolio(v * 1e6)}
@@ -688,7 +688,7 @@ export default function MonteCarloSim() {
               display={stockAllocation === 100 ? "100% Stocks" : stockAllocation === 0 ? "100% Bonds" : `${stockAllocation}/${100 - stockAllocation}`}
               color={useHistorical ? "#4ade80" : "#8bb4f8"}
               sub={useHistorical ? `${historicalStats.startYear}–${historicalStats.endYear}: ${Math.round(historicalStats.meanReturn * 100)}% return, ${Math.round(historicalStats.stdDev * 100)}% vol` : `${stockAllocation}% S&P 500 · ${100 - stockAllocation}% 10-yr Treasury`}
-              subColor={useHistorical ? "#4a8a5a" : "#3a4a68"}
+              subColor={useHistorical ? "#6aaa7a" : "#5a6a88"}
               min={0} max={100} step={10} value={stockAllocation}
               onChange={(e) => setStockAllocation(parseInt(e.target.value))}
             />
@@ -735,7 +735,7 @@ export default function MonteCarloSim() {
                 >
                   Other Income
                 </div>
-                <div style={{ fontSize: 13, color: "#4a5a78", marginTop: 2 }}>Income that offsets withdrawals during early years</div>
+                <div style={{ fontSize: 13, color: "#6b7a99", marginTop: 2 }}>Income that offsets withdrawals during early years</div>
               </div>
               <button
                 className="toggle-track"
@@ -754,7 +754,7 @@ export default function MonteCarloSim() {
               <div style={{ animation: "fadeIn 0.3s ease-out" }}>
                 <div style={{ marginBottom: 16 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10 }}>
-                    <span style={{ fontSize: 14, color: "#7a8aa8", fontWeight: 500 }}>Annual Income</span>
+                    <span style={{ fontSize: 14, color: "#96a5be", fontWeight: 500 }}>Annual Income</span>
                     <span style={{ fontSize: 18, color: "#c4b5fd", fontWeight: 600, fontFamily: MONO }}>
                       ${(semiRetireIncome / 1000).toFixed(0)}K/yr
                     </span>
@@ -867,7 +867,7 @@ export default function MonteCarloSim() {
               style={{
                 marginBottom: 18, padding: "10px 14px", borderRadius: 8,
                 background: "rgba(74,222,128,0.04)", border: "1px solid rgba(74,222,128,0.1)",
-                fontSize: 14, color: "#6a9a78", lineHeight: 1.6,
+                fontSize: 14, color: "#8abaa0", lineHeight: 1.6,
               }}
             >
               Return, volatility, and inflation are computed from a {stockAllocation === 100 ? "100% S&P 500" : `${stockAllocation}/${100 - stockAllocation} stock/bond`} portfolio
@@ -904,7 +904,7 @@ export default function MonteCarloSim() {
                 display={s.display}
                 color={s.color}
                 sub={s.sub}
-                subColor={useHistorical && s.breaksHistorical ? "#4a8a5a" : "#3a4a68"}
+                subColor={useHistorical && s.breaksHistorical ? "#6aaa7a" : "#5a6a88"}
                 rangeLabel={`${s.pctMin}%–${s.pctMax}%`}
                 min={s.pctMin * 10}
                 max={s.pctMax * 10}
@@ -1033,11 +1033,11 @@ export default function MonteCarloSim() {
                 },
               ].map((m, i) => (
                 <div key={i} style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 12, color: "#4a5a78", letterSpacing: 1, textTransform: "uppercase", fontFamily: MONO, marginBottom: 6 }}>
+                  <div style={{ fontSize: 12, color: "#6b7a99", letterSpacing: 1, textTransform: "uppercase", fontFamily: MONO, marginBottom: 6 }}>
                     {m.label}
                   </div>
                   <div style={{ fontSize: 24, fontWeight: 600, color: "#d0d8e8", fontFamily: MONO }}>{m.value}</div>
-                  <div style={{ fontSize: 13, color: "#4a5a78", marginTop: 2 }}>{m.sub}</div>
+                  <div style={{ fontSize: 13, color: "#6b7a99", marginTop: 2 }}>{m.sub}</div>
                 </div>
               ))}
             </div>
@@ -1082,7 +1082,7 @@ export default function MonteCarloSim() {
                   <svg width={16} height={2}>
                     <line x1={0} y1={1} x2={16} y2={1} stroke={l.color} strokeWidth={2} strokeDasharray={l.dash ? "3 2" : "none"} />
                   </svg>
-                  <span style={{ fontSize: 12, color: "#5a6a88" }}>{l.label}</span>
+                  <span style={{ fontSize: 12, color: "#96a5be" }}>{l.label}</span>
                 </div>
               ))}
             </div>
@@ -1105,13 +1105,13 @@ export default function MonteCarloSim() {
               </defs>
               <XAxis
                 dataKey="year"
-                tick={{ fill: "#3a4a68", fontSize: 12, fontFamily: MONO }}
+                tick={{ fill: "#5a6a88", fontSize: 12, fontFamily: MONO }}
                 axisLine={{ stroke: "rgba(40,60,100,0.2)" }}
                 tickLine={false}
                 interval={Math.max(1, Math.floor(years / 10) - 1)}
               />
               <YAxis
-                tick={{ fill: "#3a4a68", fontSize: 12, fontFamily: MONO }}
+                tick={{ fill: "#5a6a88", fontSize: 12, fontFamily: MONO }}
                 tickFormatter={(v) => `$${v}M`}
                 axisLine={{ stroke: "rgba(40,60,100,0.2)" }}
                 tickLine={false}
@@ -1151,14 +1151,14 @@ export default function MonteCarloSim() {
         {/* ───── Methodology & Caveats ───── */}
         <div className="card" style={{ padding: "28px 32px", marginBottom: 24, animation: "fadeIn 0.6s ease-out 0.4s both" }}>
           <div style={{ ...sectionLabel, marginBottom: 12 }}>Methodology</div>
-          <div style={{ fontSize: 14.5, color: "#6a7a98", lineHeight: 1.75 }}>
-            <strong style={{ color: "#7a8aa8" }}>Simulation.</strong>{" "}
+          <div style={{ fontSize: 14.5, color: "#8a9ab8", lineHeight: 1.75 }}>
+            <strong style={{ color: "#96a5be" }}>Simulation.</strong>{" "}
             {SIMULATIONS.toLocaleString()} independent scenarios are generated, each producing {years} years of annual portfolio returns
             drawn from a normal distribution with mean {Math.round(meanReturn * 100)}% and standard deviation {Math.round(stdDev * 100)}%.
             Returns are generated using a deterministic pseudo-random number generator (Mulberry32) that produces identical results for a given seed;
             clicking "Run another {SIMULATIONS.toLocaleString()}" changes the seed to produce a fresh batch.
             {feeDrag > 0 && ` An annual fee of ${(feeDrag * 100).toFixed(1)}% is subtracted from the expected return before each year's draw (effective μ = ${Math.round((meanReturn - feeDrag) * 100)}%).`}
-            {" "}<strong style={{ color: "#7a8aa8" }}>Withdrawals.</strong>{" "}
+            {" "}<strong style={{ color: "#96a5be" }}>Withdrawals.</strong>{" "}
             Your after-tax spending target (${(annualSpending / 1000).toFixed(0)}K) is grossed up by your {Math.round(taxRate * 100)}% effective tax rate,
             producing a gross withdrawal of ${(grossWithdrawal / 1000).toFixed(0)}K in year 1. This gross amount increases by
             {" "}{Math.round(inflation * 100)}% each year to maintain purchasing power.
@@ -1168,7 +1168,7 @@ export default function MonteCarloSim() {
             and the remaining years are recorded at $0.
             {useHistorical && (
               <span>
-                {" "}<strong style={{ color: "#7a8aa8" }}>Historical basis.</strong>{" "}
+                {" "}<strong style={{ color: "#96a5be" }}>Historical basis.</strong>{" "}
                 When historical mode is active, the return, volatility, and inflation parameters are derived from actual data
                 for <span style={{ color: "#4ade80" }}>{historicalStats.startYear}–{historicalStats.endYear}</span> ({historicalStats.n} years).
                 Stock returns use S&P 500 total returns with dividends reinvested (Shiller/CRSP data).
@@ -1181,7 +1181,7 @@ export default function MonteCarloSim() {
                 naturally reproduces the lower geometric outcome.
               </span>
             )}
-            {" "}<strong style={{ color: "#7a8aa8" }}>Chart & balances.</strong>{" "}
+            {" "}<strong style={{ color: "#96a5be" }}>Chart & balances.</strong>{" "}
             All dollar amounts are shown in today's purchasing power — each year's balance is divided by (1 + inflation)^year to remove the effect of inflation.
             The <span style={{ color: "#5a8de6" }}>blue line</span> shows the median (50th percentile),
             the <span style={{ color: "#4ade80" }}>green dashed line</span> the 90th percentile (favorable markets), and
@@ -1189,30 +1189,30 @@ export default function MonteCarloSim() {
             Shaded bands show the 5th–95th percentile range (outermost), 10th–90th (middle), and 25th–75th interquartile range (innermost).
           </div>
           <div style={{ ...sectionLabel, marginTop: 18, marginBottom: 10 }}>Known Limitations</div>
-          <div style={{ fontSize: 14, color: "#566280", lineHeight: 1.75 }}>
-            <strong style={{ color: "#7a8aa8" }}>Normal distribution.</strong>{" "}
+          <div style={{ fontSize: 14, color: "#96a5be", lineHeight: 1.75 }}>
+            <strong style={{ color: "#96a5be" }}>Normal distribution.</strong>{" "}
             Actual stock returns are negatively skewed with fat tails — crashes like 2008 (−37%) occur more frequently than a normal model predicts.
             The model also treats each year as independent, so it cannot produce the volatility clustering seen in real crises (e.g., 1973–74 back-to-back
             losses during 12%+ inflation). These omissions likely make the success rate <em>modestly optimistic</em>.
             {stockAllocation < 100 && (
               <span>
-                {" "}<strong style={{ color: "#7a8aa8" }}>Single distribution.</strong>{" "}
+                {" "}<strong style={{ color: "#96a5be" }}>Single distribution.</strong>{" "}
                 The stock/bond blend is modeled as a single return distribution, not as two correlated asset classes drawn separately. This means the simulation
                 captures the historical blended return profile but does not model rebalancing mechanics, drift between asset classes, or the changing
                 correlation between stocks and bonds (which broke down in 2022 when both fell simultaneously).
               </span>
             )}
-            {" "}<strong style={{ color: "#7a8aa8" }}>Fixed withdrawal strategy.</strong>{" "}
+            {" "}<strong style={{ color: "#96a5be" }}>Fixed withdrawal strategy.</strong>{" "}
             The model uses a constant inflation-adjusted withdrawal — the same approach as the original "4% rule" research. It does not model dynamic strategies
             like guardrails (reducing spending in down markets), required minimum distributions, or variable percentage withdrawals, which can
             meaningfully improve outcomes.
-            {" "}<strong style={{ color: "#7a8aa8" }}>Tax estimate.</strong>{" "}
+            {" "}<strong style={{ color: "#96a5be" }}>Tax estimate.</strong>{" "}
             The tax rate is a simplified flat rate applied to the gross withdrawal. Actual taxes depend on account type (traditional IRA, Roth, taxable brokerage),
             federal bracket, state of residence, capital gains vs. ordinary income treatment, and may change over a {years}-year horizon.
-            {" "}<strong style={{ color: "#7a8aa8" }}>Timing.</strong>{" "}
+            {" "}<strong style={{ color: "#96a5be" }}>Timing.</strong>{" "}
             Returns are applied to the full balance before withdrawals each year (end-of-year withdrawal). In practice, retirees withdraw monthly
             throughout the year, which slightly reduces the compounding base.
-            {" "}<strong style={{ color: "#7a8aa8" }}>Not modeled.</strong>{" "}
+            {" "}<strong style={{ color: "#96a5be" }}>Not modeled.</strong>{" "}
             Social Security and pension income are not included. If applicable, these could be added as other income streams using the Other Income toggle above.
           </div>
         </div>
@@ -1221,7 +1221,7 @@ export default function MonteCarloSim() {
           style={{
             textAlign: "center",
             fontSize: 12,
-            color: "#2a3a58",
+            color: "#4a5a78",
             padding: "0 0 40px",
             fontFamily: MONO,
           }}
