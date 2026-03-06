@@ -1012,18 +1012,14 @@ export default function MonteCarloSim() {
                 sub: `${(effectiveRate * 100).toFixed(1)}% rate · +$${Math.round((grossWithdrawal - annualSpending) / 1000)}K tax`,
               },
               {
-                label: results.failures > SIMULATIONS * 0.1 ? "Median (if survived)" : "Median End Balance",
-                value: (() => {
-                  const real = results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEnd : results.medianEnd;
-                  return `$${real.toFixed(1)}M`;
-                })(),
-                sub: (() => {
-                  const nominal = results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEndNominal : results.medianEndNominal;
-                  if (results.failures > SIMULATIONS * 0.1) {
-                    return `$${nominal.toFixed(1)}M nominal · ${results.failures} failed`;
-                  }
-                  return `$${nominal.toFixed(1)}M nominal · today's dollars`;
-                })(),
+                label: results.failures > SIMULATIONS * 0.1 ? "Median Real (if survived)" : "Median End (Real)",
+                value: `$${(results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEnd : results.medianEnd).toFixed(1)}M`,
+                sub: "today's dollars",
+              },
+              {
+                label: results.failures > SIMULATIONS * 0.1 ? "Median Nominal (if survived)" : "Median End (Nominal)",
+                value: `$${(results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEndNominal : results.medianEndNominal).toFixed(1)}M`,
+                sub: results.failures > SIMULATIONS * 0.1 ? `${results.failures} failed` : "future dollars",
               },
             ].map((m, i) => (
               <div key={i} style={{ textAlign: "center" }}>
