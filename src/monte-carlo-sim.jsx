@@ -450,6 +450,7 @@ export default function MonteCarloSim() {
   const [useHistorical, setUseHistorical] = useState(true);
   const [feeDrag, setFeeDrag] = useState(0.01);
   const [taxRate, setTaxRate] = useState(0.25);
+  const [showMethodology, setShowMethodology] = useState(false);
 
   const historicalStats = useMemo(() => computeBlendedStats(stockAllocation / 100), [stockAllocation]);
 
@@ -568,7 +569,7 @@ export default function MonteCarloSim() {
         minHeight: "100vh",
         background: "linear-gradient(180deg, #060a14 0%, #0c1220 40%, #0a0f1c 100%)",
         color: "#c0c8d8",
-        fontFamily: "'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+        fontFamily: "'Sora', -apple-system, BlinkMacSystemFont, sans-serif",
       }}
     >
       <style>{`
@@ -619,7 +620,7 @@ export default function MonteCarloSim() {
           .hero-flex { flex-direction: column !important; align-items: flex-start !important; }
           .hero-metrics { width: 100% !important; justify-content: space-between !important; }
           .hero-metrics > div { text-align: left !important; }
-          .hero-number { font-size: 52px !important; }
+          .hero-number { font-size: 64px !important; }
         }
       `}</style>
 
@@ -937,126 +938,119 @@ export default function MonteCarloSim() {
 
         {/* ───── Success Rate Hero ───── */}
         <div
-          className="card shimmer"
+          className="shimmer"
           style={{
-            padding: "36px 40px",
+            padding: "48px 40px",
             marginBottom: 20,
-            borderColor: `${riskGrade.color}22`,
+            borderRadius: 20,
+            background: `radial-gradient(ellipse at 30% 0%, ${riskGrade.color}08 0%, transparent 60%), linear-gradient(135deg, rgba(14,20,36,0.95) 0%, rgba(10,16,30,0.98) 100%)`,
+            border: `1px solid ${riskGrade.color}18`,
+            backdropFilter: "blur(20px)",
             animation: "fadeIn 0.6s ease-out 0.2s both",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={sectionLabel}>Probability of Success</div>
-              <div
+          <div style={{ textAlign: "center", marginBottom: 32 }}>
+            <div style={{ marginBottom: 16 }}>
+              <span
+                className="hero-number"
                 style={{
-                  display: "inline-flex", alignItems: "center", gap: 6,
-                  padding: "3px 10px", borderRadius: 20,
-                  background: "rgba(90,141,230,0.08)", border: "1px solid rgba(90,141,230,0.15)",
+                  fontSize: 112,
+                  fontWeight: 800,
+                  color: riskGrade.color,
+                  lineHeight: 1,
+                  fontFamily: "'Sora', sans-serif",
+                  letterSpacing: "-0.03em",
+                  textShadow: `0 0 80px ${riskGrade.color}30`,
                 }}
               >
-                <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#5a8de6", animation: "pulse 2s ease infinite" }} />
-                <span style={{ fontSize: 12, fontWeight: 600, color: "#7ba6ed", letterSpacing: 1, fontFamily: MONO }}>
-                  <CountUp to={SIMULATIONS} duration={800} /> runs
-                </span>
-              </div>
+                <AnimatedNumber value={results.successRate} suffix="%" />
+              </span>
             </div>
-            <button
-              onClick={() => setSeed((s) => s + 1)}
-              style={{
-                padding: "6px 14px", borderRadius: 6,
-                border: "1px solid rgba(90,141,230,0.15)", background: "transparent",
-                color: "#5a7a9a", cursor: "pointer", fontSize: 12, fontFamily: MONO,
-                transition: "all 0.2s",
-              }}
-              onMouseEnter={(e) => { e.currentTarget.style.color = "#8bb4f8"; e.currentTarget.style.borderColor = "rgba(90,141,230,0.4)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.color = "#5a7a9a"; e.currentTarget.style.borderColor = "rgba(90,141,230,0.15)"; }}
-            >
-              Run another {SIMULATIONS.toLocaleString()} ↻
-            </button>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, marginBottom: 8 }}>
+              <span
+                style={{
+                  fontSize: 14,
+                  fontWeight: 600,
+                  color: riskGrade.color,
+                  padding: "5px 16px",
+                  borderRadius: 20,
+                  background: riskGrade.bg,
+                  border: `1px solid ${riskGrade.color}22`,
+                  letterSpacing: 0.5,
+                }}
+              >
+                {riskGrade.label}
+              </span>
+              <span style={{ fontSize: 13, color: "#6b7a99", fontFamily: MONO }}>
+                <CountUp to={SIMULATIONS} duration={800} /> simulations
+              </span>
+              <button
+                onClick={() => setSeed((s) => s + 1)}
+                style={{
+                  padding: "5px 12px", borderRadius: 6,
+                  border: "1px solid rgba(90,141,230,0.15)", background: "transparent",
+                  color: "#5a7a9a", cursor: "pointer", fontSize: 12, fontFamily: MONO,
+                  transition: "all 0.2s",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.color = "#8bb4f8"; e.currentTarget.style.borderColor = "rgba(90,141,230,0.4)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.color = "#5a7a9a"; e.currentTarget.style.borderColor = "rgba(90,141,230,0.15)"; }}
+              >
+                ↻
+              </button>
+            </div>
           </div>
-          <div className="hero-flex" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 20 }}>
-            <div>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
-                <span
-                  className="hero-number"
-                  style={{
-                    fontSize: 72,
-                    fontWeight: 700,
-                    color: riskGrade.color,
-                    lineHeight: 1,
-                    fontFamily: MONO,
-                  }}
-                >
-                  <AnimatedNumber value={results.successRate} suffix="%" />
-                </span>
-                <span
-                  style={{
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: riskGrade.color,
-                    padding: "5px 14px",
-                    borderRadius: 20,
-                    background: riskGrade.bg,
-                    border: `1px solid ${riskGrade.color}22`,
-                  }}
-                >
-                  {riskGrade.label}
-                </span>
-              </div>
-            </div>
-            <div className="hero-metrics" style={{ display: "flex", gap: 28, flexWrap: "wrap" }}>
-              {[
-                {
-                  label: "Annual Spending",
-                  value: `$${(annualSpending / 1000).toFixed(0)}K`,
-                  sub: `$${Math.round(annualSpending / 12000)}K/mo after tax`,
-                },
-                {
-                  label: "Gross Withdrawal",
-                  value: `$${(grossWithdrawal / 1000).toFixed(0)}K`,
-                  sub: `${(effectiveRate * 100).toFixed(1)}% rate · +$${Math.round((grossWithdrawal - annualSpending) / 1000)}K tax`,
-                },
-                {
-                  label: results.failures > SIMULATIONS * 0.1 ? "Median (if survived)" : "Median End Balance",
-                  value: (() => {
-                    const real = results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEnd : results.medianEnd;
-                    return `$${real.toFixed(1)}M`;
-                  })(),
-                  sub: (() => {
-                    const nominal = results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEndNominal : results.medianEndNominal;
-                    if (results.failures > SIMULATIONS * 0.1) {
-                      return `$${nominal.toFixed(1)}M nominal · ${results.failures} failed`;
-                    }
-                    return `$${nominal.toFixed(1)}M nominal · today's dollars`;
-                  })(),
-                },
-              ].map((m, i) => (
-                <div key={i} style={{ textAlign: "right" }}>
-                  <div style={{ fontSize: 12, color: "#6b7a99", letterSpacing: 1, textTransform: "uppercase", fontFamily: MONO, marginBottom: 6 }}>
-                    {m.label}
-                  </div>
-                  <div style={{ fontSize: 24, fontWeight: 600, color: "#d0d8e8", fontFamily: MONO }}>{m.value}</div>
-                  <div style={{ fontSize: 13, color: "#6b7a99", marginTop: 2 }}>{m.sub}</div>
+          <div style={{ display: "flex", justifyContent: "center", gap: 48, flexWrap: "wrap" }}>
+            {[
+              {
+                label: "Annual Spending",
+                value: `$${(annualSpending / 1000).toFixed(0)}K`,
+                sub: `$${Math.round(annualSpending / 12000)}K/mo after tax`,
+              },
+              {
+                label: "Gross Withdrawal",
+                value: `$${(grossWithdrawal / 1000).toFixed(0)}K`,
+                sub: `${(effectiveRate * 100).toFixed(1)}% rate · +$${Math.round((grossWithdrawal - annualSpending) / 1000)}K tax`,
+              },
+              {
+                label: results.failures > SIMULATIONS * 0.1 ? "Median (if survived)" : "Median End Balance",
+                value: (() => {
+                  const real = results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEnd : results.medianEnd;
+                  return `$${real.toFixed(1)}M`;
+                })(),
+                sub: (() => {
+                  const nominal = results.failures > SIMULATIONS * 0.1 ? results.medianSurvivorEndNominal : results.medianEndNominal;
+                  if (results.failures > SIMULATIONS * 0.1) {
+                    return `$${nominal.toFixed(1)}M nominal · ${results.failures} failed`;
+                  }
+                  return `$${nominal.toFixed(1)}M nominal · today's dollars`;
+                })(),
+              },
+            ].map((m, i) => (
+              <div key={i} style={{ textAlign: "center" }}>
+                <div style={{ fontSize: 11, color: "#6b7a99", letterSpacing: 1.5, textTransform: "uppercase", fontFamily: MONO, marginBottom: 6 }}>
+                  {m.label}
                 </div>
-              ))}
-            </div>
+                <div style={{ fontSize: 22, fontWeight: 600, color: "#d0d8e8", fontFamily: MONO }}>{m.value}</div>
+                <div style={{ fontSize: 12, color: "#6b7a99", marginTop: 3 }}>{m.sub}</div>
+              </div>
+            ))}
           </div>
           {results.failures > 0 && (
             <div
               style={{
-                marginTop: 16,
+                marginTop: 24,
                 padding: "10px 16px",
                 borderRadius: 10,
                 background: "rgba(248,113,113,0.06)",
                 border: "1px solid rgba(248,113,113,0.12)",
                 display: "flex",
                 alignItems: "center",
+                justifyContent: "center",
                 gap: 10,
               }}
             >
               <span style={{ fontSize: 16 }}>⚠</span>
-              <span style={{ fontSize: 14, color: "#f0a0a0", lineHeight: 1.5 }}>
+              <span style={{ fontSize: 13, color: "#f0a0a0", lineHeight: 1.5 }}>
                 {results.failures} of {SIMULATIONS} scenarios ran out of money
                 {results.avgFailYear ? ` — average depletion at year ${results.avgFailYear.toFixed(0)}` : ""}.
                 {results.medianEnd > 0
@@ -1069,7 +1063,7 @@ export default function MonteCarloSim() {
         </div>
 
         {/* ───── Chart ───── */}
-        <div className="card" style={{ padding: "32px 32px 28px", marginBottom: 20, animation: "fadeIn 0.6s ease-out 0.3s both" }}>
+        <div style={{ padding: "32px 0 28px", marginBottom: 20, animation: "fadeIn 0.6s ease-out 0.3s both" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20, padding: "0 4px", flexWrap: "wrap", gap: 8 }}>
             <div style={sectionLabel}>Portfolio Balance (Today's Dollars)</div>
             <div style={{ display: "flex", gap: 16 }}>
@@ -1087,7 +1081,7 @@ export default function MonteCarloSim() {
               ))}
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={480}>
+          <ResponsiveContainer width="100%" height={540}>
             <ComposedChart data={results.percentileData} margin={{ top: 8, right: 8, left: 4, bottom: 4 }}>
               <defs>
                 <linearGradient id="bandOuter" x1="0" y1="0" x2="0" y2="1">
@@ -1149,9 +1143,19 @@ export default function MonteCarloSim() {
         </div>
 
         {/* ───── Methodology & Caveats ───── */}
-        <div className="card" style={{ padding: "28px 32px", marginBottom: 24, animation: "fadeIn 0.6s ease-out 0.4s both" }}>
-          <div style={{ ...sectionLabel, marginBottom: 12 }}>Methodology</div>
-          <div style={{ fontSize: 14.5, color: "#8a9ab8", lineHeight: 1.75 }}>
+        <div className="card" style={{ padding: "20px 32px", marginBottom: 24, animation: "fadeIn 0.6s ease-out 0.4s both" }}>
+          <button
+            onClick={() => setShowMethodology(!showMethodology)}
+            style={{
+              display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%",
+              background: "none", border: "none", cursor: "pointer", padding: "8px 0",
+            }}
+          >
+            <span style={sectionLabel}>Methodology & Limitations</span>
+            <span style={{ fontSize: 13, color: "#6b7a99", fontFamily: MONO, transition: "transform 0.3s", transform: showMethodology ? "rotate(180deg)" : "rotate(0)" }}>▾</span>
+          </button>
+          {showMethodology && <div style={{ animation: "fadeIn 0.3s ease-out" }}>
+          <div style={{ fontSize: 14.5, color: "#8a9ab8", lineHeight: 1.75, marginTop: 12 }}>
             <strong style={{ color: "#96a5be" }}>Simulation.</strong>{" "}
             {SIMULATIONS.toLocaleString()} independent scenarios are generated, each producing {years} years of annual portfolio returns
             drawn from a normal distribution with mean {Math.round(meanReturn * 100)}% and standard deviation {Math.round(stdDev * 100)}%.
@@ -1215,6 +1219,7 @@ export default function MonteCarloSim() {
             {" "}<strong style={{ color: "#96a5be" }}>Not modeled.</strong>{" "}
             Social Security and pension income are not included. If applicable, these could be added as other income streams using the Other Income toggle above.
           </div>
+          </div>}
         </div>
 
         <div
