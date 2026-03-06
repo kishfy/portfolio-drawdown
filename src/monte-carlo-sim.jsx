@@ -1065,7 +1065,7 @@ export default function MonteCarloSim() {
             <div style={{ display: "flex", gap: 16 }}>
               {[
                 { color: "#4ade80", label: "90th %", dash: true },
-                { color: "#5a8de6", label: "Median", dash: false },
+                { color: "#ffffff", label: "Median", dash: false },
                 { color: "#f87171", label: "10th %", dash: true },
               ].map((l, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "center", gap: 5 }}>
@@ -1118,7 +1118,9 @@ export default function MonteCarloSim() {
               <Area type="monotone" dataKey="band_90_95" stackId="bands" stroke="none" fill="url(#bandOuter)" />
 
               <Line type="monotone" dataKey="p90" stroke="#4ade80" strokeWidth={1.5} strokeDasharray="4 3" dot={false} />
-              <Line type="monotone" dataKey="p50" stroke="#5a8de6" strokeWidth={2.5} dot={false} />
+              <Line type="monotone" dataKey="p75" stroke="#67b5f7" strokeWidth={1} strokeOpacity={0.5} strokeDasharray="3 3" dot={false} />
+              <Line type="monotone" dataKey="p50" stroke="#ffffff" strokeWidth={2.5} dot={false} />
+              <Line type="monotone" dataKey="p25" stroke="#f0a050" strokeWidth={1} strokeOpacity={0.5} strokeDasharray="3 3" dot={false} />
               <Line type="monotone" dataKey="p10" stroke="#f87171" strokeWidth={1.5} strokeDasharray="4 3" dot={false} />
               <ReferenceLine y={0} stroke="rgba(248,113,113,0.3)" strokeWidth={1} strokeDasharray="6 4" />
               {semiRetireEnabled && semiRetireYears > 0 && (
