@@ -923,7 +923,7 @@ export default function MonteCarloSim() {
             <SliderControl
               label="Fees & Advisory" display={`${(feeDrag * 100).toFixed(1)}%`} color="#c4a050"
               sub="deducted from returns" rangeLabel="0%–3%"
-              min={0} max={30} step={5} value={Math.round(feeDrag * 1000)}
+              min={0} max={30} step={1} value={Math.round(feeDrag * 1000)}
               onChange={(e) => setFeeDrag(parseInt(e.target.value) / 1000)}
             />
             <SliderControl
