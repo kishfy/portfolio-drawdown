@@ -436,20 +436,20 @@ function CountUp({ to, duration = 600 }) {
 
 /* ---------- Main Component ---------- */
 export default function MonteCarloSim() {
-  const [portfolio, setPortfolio] = useState(30_000_000);
-  const [years, setYears] = useState(45);
+  const [portfolio, setPortfolio] = useState(50_000_000);
+  const [years, setYears] = useState(40);
   const [annualSpending, setAnnualSpending] = useState(600_000);
-  const [stockAllocation, setStockAllocation] = useState(80);
-  const [meanReturn, setMeanReturn] = useState(() => computeBlendedStats(0.8).meanReturn);
-  const [stdDev, setStdDev] = useState(() => computeBlendedStats(0.8).stdDev);
-  const [inflation, setInflation] = useState(() => computeBlendedStats(0.8).inflation);
+  const [stockAllocation, setStockAllocation] = useState(70);
+  const [meanReturn, setMeanReturn] = useState(() => computeBlendedStats(0.7).meanReturn);
+  const [stdDev, setStdDev] = useState(() => computeBlendedStats(0.7).stdDev);
+  const [inflation, setInflation] = useState(() => computeBlendedStats(0.7).inflation);
   const [semiRetireIncome, setSemiRetireIncome] = useState(0);
   const [semiRetireYears, setSemiRetireYears] = useState(5);
   const [semiRetireEnabled, setSemiRetireEnabled] = useState(false);
   const [seed, setSeed] = useState(1);
   const [useHistorical, setUseHistorical] = useState(true);
-  const [feeDrag, setFeeDrag] = useState(0.01);
-  const [taxRate, setTaxRate] = useState(0.25);
+  const [feeDrag, setFeeDrag] = useState(0.005);
+  const [taxRate, setTaxRate] = useState(0.30);
   const [showMethodology, setShowMethodology] = useState(false);
 
   const historicalStats = useMemo(() => computeBlendedStats(stockAllocation / 100), [stockAllocation]);
