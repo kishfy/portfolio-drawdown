@@ -620,17 +620,31 @@ export default function MonteCarloSim() {
           .hero-flex { flex-direction: column !important; align-items: flex-start !important; }
           .hero-metrics { width: 100% !important; justify-content: space-between !important; }
           .hero-metrics > div { text-align: left !important; }
-          .hero-number { font-size: 64px !important; }
+          .hero-number { font-size: 56px !important; }
+          .mobile-container { padding: 24px 16px 32px !important; }
+          .mobile-title { font-size: 28px !important; }
+          .mobile-card { padding: 20px 18px !important; }
+          .mobile-hero { padding: 28px 20px !important; }
+          .mobile-hero-metrics {
+            gap: 12px 20px !important;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            justify-items: center !important;
+          }
+          .mobile-chart { height: 320px !important; }
+          .mobile-methodology { padding: 16px 18px !important; }
+          .mobile-fees { padding: 12px 14px !important; }
+          .mobile-subtitle { font-size: 15px !important; }
         }
       `}</style>
 
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "48px 32px 56px" }}>
+      <div className="mobile-container" style={{ maxWidth: 1200, margin: "0 auto", padding: "48px 32px 56px" }}>
         {/* ───── Header ───── */}
         <div style={{ marginBottom: 44, animation: "fadeIn 0.6s ease-out" }}>
-          <h1 style={{ fontSize: 42, fontWeight: 700, color: "#edf2fc", lineHeight: 1.15, marginBottom: 10 }}>
+          <h1 className="mobile-title" style={{ fontSize: 42, fontWeight: 700, color: "#edf2fc", lineHeight: 1.15, marginBottom: 10 }}>
             Monte Carlo Portfolio Analysis
           </h1>
-          <p style={{ fontSize: 17, color: "#96a5be", lineHeight: 1.5 }}>
+          <p className="mobile-subtitle" style={{ fontSize: 17, color: "#96a5be", lineHeight: 1.5 }}>
             <EditableAmount
               value={portfolio / 1e6}
               onChange={(v) => setPortfolio(v * 1e6)}
@@ -665,7 +679,7 @@ export default function MonteCarloSim() {
         </div>
 
         {/* ───── Portfolio Setup Card ───── */}
-        <div className="card" style={{ padding: "32px 36px", marginBottom: 20, animation: "fadeIn 0.6s ease-out 0.05s both" }}>
+        <div className="card mobile-card" style={{ padding: "32px 36px", marginBottom: 20, animation: "fadeIn 0.6s ease-out 0.05s both" }}>
           <div style={{ ...sectionLabel, marginBottom: 22 }}>Portfolio Setup</div>
           <div className="grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 20 }}>
             <SliderControl
@@ -824,7 +838,7 @@ export default function MonteCarloSim() {
         </div>
 
         {/* ───── Market Assumptions ───── */}
-        <div className="card" style={{ padding: "32px 36px", marginBottom: 20, animation: "fadeIn 0.6s ease-out 0.1s both" }}>
+        <div className="card mobile-card" style={{ padding: "32px 36px", marginBottom: 20, animation: "fadeIn 0.6s ease-out 0.1s both" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 18, flexWrap: "wrap", gap: 8 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={sectionLabel}>Market Assumptions</div>
@@ -920,7 +934,7 @@ export default function MonteCarloSim() {
           </div>
 
           {/* Fees & Taxes */}
-          <div className="grid-2col" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20, padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(40,60,100,0.2)", background: "rgba(14,20,36,0.4)" }}>
+          <div className="grid-2col mobile-fees" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginTop: 20, padding: "16px 20px", borderRadius: 12, border: "1px solid rgba(40,60,100,0.2)", background: "rgba(14,20,36,0.4)" }}>
             <SliderControl
               label="Fees & Advisory" display={`${(feeDrag * 100).toFixed(1)}%`} color="#c4a050"
               sub="deducted from returns" rangeLabel="0%–3%"
@@ -938,7 +952,7 @@ export default function MonteCarloSim() {
 
         {/* ───── Success Rate Hero ───── */}
         <div
-          className="shimmer"
+          className="shimmer mobile-hero"
           style={{
             padding: "48px 40px",
             marginBottom: 20,
@@ -999,7 +1013,7 @@ export default function MonteCarloSim() {
               </button>
             </div>
           </div>
-          <div style={{ display: "flex", justifyContent: "center", gap: 48, flexWrap: "wrap" }}>
+          <div className="mobile-hero-metrics" style={{ display: "flex", justifyContent: "center", gap: 48, flexWrap: "wrap" }}>
             {[
               {
                 label: "Annual Spending",
@@ -1077,7 +1091,8 @@ export default function MonteCarloSim() {
               ))}
             </div>
           </div>
-          <ResponsiveContainer width="100%" height={540}>
+          <div className="mobile-chart" style={{ height: 540 }}>
+          <ResponsiveContainer width="100%" height="100%">
             <ComposedChart data={results.percentileData} margin={{ top: 8, right: 8, left: 4, bottom: 4 }}>
               <defs>
                 <linearGradient id="bandOuter" x1="0" y1="0" x2="0" y2="1">
@@ -1138,10 +1153,11 @@ export default function MonteCarloSim() {
               )}
             </ComposedChart>
           </ResponsiveContainer>
+          </div>
         </div>
 
         {/* ───── Methodology & Caveats ───── */}
-        <div className="card" style={{ padding: "20px 32px", marginBottom: 24, animation: "fadeIn 0.6s ease-out 0.4s both" }}>
+        <div className="card mobile-methodology" style={{ padding: "20px 32px", marginBottom: 24, animation: "fadeIn 0.6s ease-out 0.4s both" }}>
           <button
             onClick={() => setShowMethodology(!showMethodology)}
             style={{
